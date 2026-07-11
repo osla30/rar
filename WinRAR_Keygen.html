@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WinRAR 註冊機</title>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --border-color: #ccc;
+            --success-color: #28a745;
+        }
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        h1 {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #444;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        input[type="text"]:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+        }
+        textarea {
+            font-family: "Courier New", Courier, monospace;
+            resize: vertical;
+            background-color: #fafafa;
+        }
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s, transform 0.1s;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #004494;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        /* 儲存按鈕的特殊樣式 */
+        #saveBtn {
+            background-color: var(--success-color);
+            margin-top: 15px;
+            display: none; /* 預設隱藏 */
+        }
+        #saveBtn:hover {
+            background-color: #218838;
+        }
+
+        /* 新增的授權類型提示區塊樣式 */
+        .license-tips {
+            font-size: 13px;
+            color: #555;
+            background-color: #f8f9fa;
+            padding: 10px 12px;
+            margin-top: 8px;
+            border-radius: 4px;
+            border-left: 3px solid var(--border-color);
+            line-height: 1.5;
+        }
+        
+        /* 更新後的說明區塊樣式 */
+        .instructions {
+            background-color: #e3f2fd; /* 淺藍色背景提升對比度 */
+            padding: 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-top: 25px;
+            border-left: 5px solid var(--primary-color);
+            color: #000; /* 改為純黑色字體 */
+        }
+        .instructions code {
+            background-color: #ffffff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            border: 1px solid #b3d4fc;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WinRAR 註冊機</h1>
+        
+        <div class="form-group">
+            <label for="USERNAME">請輸入用戶名：</label>
+            <input type="text" id="USERNAME" placeholder="輸入名稱">
+        </div>
+        
+        <div class="form-group">
+            <label for="LICENSETYPE">請輸入授權類型：</label>
+            <input type="text" id="LICENSETYPE" placeholder="輸入授權類型 (例如: Single PC usage license)">
+            <!-- 加入授權類型參考說明 -->
+            <div class="license-tips">
+                部分授權類型：<br>
+                Single PC usage license<br>
+                Local Site License<br>
+                Unlimited Company License<br>
+                1000 PC usage license
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <button type="button" id="but">生成！</button>
+        </div>
+        
+        <div class="form-group">
+            <label for="KEY">rarreg.key 內容：</label>
+            <textarea id="KEY" rows="12"></textarea>
+            
+            <button type="button" id="saveBtn">保存 rarreg.key</button>
+        </div>
+        
+        <div class="instructions">
+            <strong>註冊方式：</strong><br><br>
+            1. 將 <code>rarreg.key</code> 複製到：<br>
+            WinRAR 安裝資料夾中 (預設：<code>C:\Program Files\WinRAR</code>) 或 <code>%APPDATA%\WinRAR</code> 資料夾中。<br><br>
+            2. 也可以拖曳 <code>rarreg.key</code> 到 WinRAR 視窗中來註冊。
+        </div>
+    </div>
+
+    <script src="KeyGen.js"></script>
+    <script>
+        let but = document.getElementById('but');
+        let USERNAME = document.getElementById('USERNAME');
+        let LICENSETYPE = document.getElementById('LICENSETYPE');
+        let KEY = document.getElementById('KEY');
+        let saveBtn = document.getElementById('saveBtn');
+
+        but.onclick = function () {
+            let _a = USERNAME.value;
+            let _b = LICENSETYPE.value;
+            
+            // 隱藏儲存按鈕，避免使用者在生成過程中點擊
+            saveBtn.style.display = 'none';
+
+            if (typeof Winrar_KeyGen === "function") {
+                KEY.value = "處理中，請稍候...";
+                
+                // 使用 setTimeout 讓 UI 先更新 "處理中"，避免畫面在計算時凍結
+                setTimeout(() => {
+                    KEY.value = Winrar_KeyGen(_a, _b);
+                    // 金鑰生成完成後，顯示儲存按鈕
+                    saveBtn.style.display = 'block';
+                }, 100);
+            } else {
+                KEY.value = "錯誤：找不到 KeyGen.js。\n請確認 KeyGen.js 檔案與此 HTML 在同一個資料夾。";
+            }
+        };
+
+        // 儲存檔案功能
+        saveBtn.onclick = function () {
+            let content = KEY.value;
+            if (!content || content.includes("處理中") || content.includes("錯誤")) {
+                alert("請先生成有效的金鑰內容！");
+                return;
+            }
+
+            // JavaScript 產生的文字預設相容於 UTF-8，而 ASCII 為其子集。
+            // 我們指定 charset=windows-1252 (ANSI) 以確保檔案格式的相容性。
+            let blob = new Blob([content], { type: "text/plain;charset=windows-1252" });
+            let url = URL.createObjectURL(blob);
+            
+            // 建立一個隱藏的 <a> 標籤來觸發下載
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "rarreg.key";
+            document.body.appendChild(a);
+            a.click();
+            
+            // 釋放資源並移除隱藏標籤
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+    </script>
+</body>
+</html>
